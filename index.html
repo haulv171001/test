@@ -16,23 +16,49 @@
       align-items: center;
       z-index: 99999;
       cursor: pointer;
+      padding: 20px; /* tránh sát viền mobile */
     }
 
     .modal-content {
-      font-size: 32px;
+      width: 100%;
+      max-width: 500px; /* không quá to trên desktop */
+      text-align: center;
+
+      font-size: clamp(18px, 5vw, 36px); 
+      /* tự co giãn theo màn hình */
+
       font-weight: bold;
       color: #FFD700;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 30px 50px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #FFD700;
+
+      background: rgba(0, 0, 0, 0.7);
+      padding: clamp(20px, 6vw, 40px);
+      border-radius: 20px;
+
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
       animation: pulse 1.2s infinite;
+
+      backdrop-filter: blur(6px);
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      50% { transform: scale(1.06); }
       100% { transform: scale(1); }
+    }
+
+    /* Mobile nhỏ hơn 480px */
+    @media (max-width: 480px) {
+      .modal-content {
+        border-radius: 15px;
+        padding: 25px;
+      }
+    }
+
+    /* Màn hình lớn hơn 1400px */
+    @media (min-width: 1400px) {
+      .modal-content {
+        max-width: 600px;
+      }
     }
   </style>
 </head>
