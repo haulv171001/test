@@ -108,6 +108,21 @@
     requestAnimationFrame(loop);
   }
   img.onload = loop;
+  const audio = new Audio('audio.mp3');
+  audio.loop = true;
+  audio.volume = 1.0;
+
+  const modal = document.getElementById('enterModal');
+
+  modal.addEventListener('click', () => {
+    audio.play().then(() => {
+      modal.style.display = 'none';
+    }).catch(err => {
+      console.log("Audio blocked:", err);
+    });
+  });
+
+  window.addEventListener('click', startAudio);
   // style
   canvas.style.position = 'fixed';
   canvas.style.top = 0;

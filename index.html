@@ -4,10 +4,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta description="Chúc Tết Online - Gửi lời chúc mừng năm mới đến bạn bè và người thân một cách độc đáo và ý nghĩa.">
+  <title>Chúc Tết Online</title>
+  <style>
+    #enterModal {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #b5170e, #ff4d4d);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      cursor: pointer;
+    }
+
+    .modal-content {
+      font-size: 32px;
+      font-weight: bold;
+      color: #FFD700;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px 50px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #FFD700;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+  </style>
 </head>
 
 <body style="background: #b5170e;">
+  <div id="enterModal">
+    <div class="modal-content">
+      Click để vào website
+    </div>
+  </div>
   <canvas id="hoaMaiCanvas"></canvas>
   <script src="script.js"></script>
 </body>
