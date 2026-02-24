@@ -40,6 +40,62 @@
   }
   for (let i = 0; i < numFlakes; i++) flakes.push(new Flake());
 
+  // ===== HIỆU ỨNG CHỮ CHẠY =====
+  // Các biến có thể tùy chỉnh
+  const textConfig = {
+    text: 'ĐỊT MẸ MÀY', // Nội dung text
+    speed: 3, // Tốc độ chạy (pixel/frame)
+    fontSize: 48, // Kích thước font
+    fontFamily: 'Arial, sans-serif', // Font chữ
+    fontColor: '#FFD700', // Màu chữ (vàng)
+    fontWeight: 'bold', // In đậm
+    shadowColor: '#000000', // Màu bóng
+    shadowBlur: 10, // Mức độ mờ bóng
+    shadowOffsetX: 2, // Độ lệch X bóng
+    shadowOffsetY: 2, // Độ lệch Y bóng
+    opacity: 0.9, // Độ trong suốt (0-1)
+    startX: W, // Vị trí bắt đầu X
+    positionY: H / 2, // Vị trí Y (giữa màn hình)
+    direction: -1 // Hướng: -1 = trái, 1 = phải
+  };
+
+  let textX = textConfig.startX;
+
+  function drawScrollingText() {
+    // Cập nhật vị trí text
+    textX += textConfig.speed * textConfig.direction;
+
+    // Tính độ rộng text để biết khi nào reset
+    ctx.font = `${textConfig.fontWeight} ${textConfig.fontSize}px ${textConfig.fontFamily}`;
+    const textWidth = ctx.measureText(textConfig.text).width;
+
+    // Reset vị trí khi text chạy ra khỏi màn hình
+    if (textConfig.direction === -1 && textX < -textWidth) {
+      textX = W;
+    } else if (textConfig.direction === 1 && textX > W) {
+      textX = -textWidth;
+    }
+
+    // Vẽ bóng chữ
+    ctx.shadowColor = textConfig.shadowColor;
+    ctx.shadowBlur = textConfig.shadowBlur;
+    ctx.shadowOffsetX = textConfig.shadowOffsetX;
+    ctx.shadowOffsetY = textConfig.shadowOffsetY;
+
+    // Vẽ text với độ trong suốt
+    ctx.globalAlpha = textConfig.opacity;
+    ctx.fillStyle = textConfig.fontColor;
+    ctx.font = `${textConfig.fontWeight} ${textConfig.fontSize}px ${textConfig.fontFamily}`;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    ctx.fillText(textConfig.text, textX, textConfig.positionY);
+
+    // Reset trạng thái canvas
+    ctx.globalAlpha = 1;
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+  }
+
   function loop() {
     if (running) {
       ctx.clearRect(0, 0, W, H);
@@ -47,6 +103,7 @@
         f.update();
         f.draw();
       });
+      drawScrollingText(); // Vẽ chữ chạy
     }
     requestAnimationFrame(loop);
   }
