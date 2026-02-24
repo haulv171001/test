@@ -114,15 +114,19 @@
 
   const modal = document.getElementById('enterModal');
 
-  modal.addEventListener('click', () => {
-    audio.play().then(() => {
-      modal.style.display = 'none';
-    }).catch(err => {
-      console.log("Audio blocked:", err);
-    });
-  });
+  const start = async () => {
+  try {
+    await audio.play();
+    modal.style.display = 'none';
+    modal.removeEventListener('click', start);
+    modal.removeEventListener('touchstart', start);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
-  window.addEventListener('click', startAudio);
+  modal.addEventListener('click', start);
+  modal.addEventListener('touchstart', start);
   // style
   canvas.style.position = 'fixed';
   canvas.style.top = 0;
